@@ -31,5 +31,5 @@ jobs:
         run: |
           python app.py &  # inicia o servidor em background
           sleep 5          # espera o servidor subir
-          pytest teste_app.py
+          python teste_app.py
     
