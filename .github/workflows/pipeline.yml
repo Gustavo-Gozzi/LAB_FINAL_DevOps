@@ -29,7 +29,7 @@ jobs:
 
       - name: Rodar servidor e testes
         run: |
-          python app.py &  # inicia o servidor em background
-          sleep 5          # espera o servidor subir
+          python app.py &  
+          sleep 5          
           python teste_app.py
     
