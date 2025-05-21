@@ -37,10 +37,10 @@ jobs:
       needs: build-and-test
       runs-on: ubuntu-latest
       steps:
-        - name: Deploy no render
+        - name: DEPLOY RENDER GUSTAVO
           env:
-            RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-            RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+            RENDER_API_KEY: ${{ secrets.KEY_RENDER_GUSTAVO }}
+            RENDER_SERVICE_ID: ${{ secrets.ID_RENDER_GUSTAVO }}
           run: |
             curl -X POST https://api.render.com/deploy/sync \
               -H "Authorization: Bearer $RENDER_API_KEY" \
