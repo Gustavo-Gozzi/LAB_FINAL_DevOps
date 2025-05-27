@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
@@ -26,31 +25,65 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Buildando Imagem
+      - name: Buildando Imagem Docker
         run: |
           docker build -t meuapp .
 
-      - name: Inicializando Imagem
+      - name: Verificar se a imagem foi criada
         run: |
-          docker run meuapp
+          docker images | grep meuapp
 
   test: 
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Testing Server
-        run: |                    
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Buildando Imagem para Testes
+        run: |
+          docker build -t meuapp .
+
+      - name: Iniciar aplicação com Docker Compose
+        run: |
+          docker-compose up -d
+
+      - name: Aguardar aplicação inicializar
+        run: |
+          sleep 30
+
+      - name: Verificar se aplicação está rodando
+        run: |
+          curl -f http://localhost:1313 || exit 1
+
+      - name: Executar testes
+        run: |
           python teste_app.py
+
+      - name: Parar containers
+        run: |
+          docker-compose down
+
   deploy:
-      needs: test
-      runs-on: ubuntu-latest
-      steps:
-        - name: DEPLOY RENDER GUSTAVO
-          env:
-            RENDER_API_KEY: ${{ secrets.KEY_RENDER_GUSTAVO }}
-            RENDER_SERVICE_ID: ${{ secrets.ID_RENDER_GUSTAVO }}
-          run: |
-            curl -X POST https://api.render.com/deploy/sync \
-              -H "Authorization: Bearer $RENDER_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d '{"serviceId": "'"$RENDER_SERVICE_ID"'"}'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: DEPLOY RENDER GUSTAVO
+        env:
+          RENDER_API_KEY: ${{ secrets.KEY_RENDER_GUSTAVO }}
+          RENDER_SERVICE_ID: ${{ secrets.ID_RENDER_GUSTAVO }}
+        run: |
+          curl -X POST https://api.render.com/deploy/sync \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"serviceId": "'"$RENDER_SERVICE_ID"'"}'
