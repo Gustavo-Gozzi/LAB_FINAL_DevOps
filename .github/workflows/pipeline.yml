@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,10 +27,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Rodar servidor e testes
+      - name: Building Servidor
         run: |
           python app.py &  
-          sleep 5          
+          sleep 5
+
+    test: 
+      runs-on: ubuntu-latest
+      steps:
+      - name: Testing Server
+        run: |                    
           python teste_app.py
     
   deploy:
