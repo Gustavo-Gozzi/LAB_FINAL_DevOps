@@ -30,12 +30,18 @@ jobs:
       - name: Building Servidor
         run: |
           python app.py
+
+      - name: Stop server
+        run: |
+          pkill -f app.py
   test: 
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Testing Server
-        run: |                    
+        run: |     
+          python app.py & 
+          sleep 5 &               
           python teste_app.py
   deploy:
       needs: test
