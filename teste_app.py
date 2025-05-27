@@ -26,6 +26,7 @@ class APITestCase(unittest.TestCase):
         response = self.client.get('/protected')
         self.assertEqual(response.status_code, 401)
 
+#oi
 
 if __name__ == '__main__':
     unittest.main()
