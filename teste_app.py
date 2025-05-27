@@ -17,7 +17,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.json, {"message": "API is running"})
 
     def test_login(self):
-
+#a
         response = self.client.post('/login')
         self.assertEqual(response.status_code, 200)
         self.assertIn('acess_token', response.json)
