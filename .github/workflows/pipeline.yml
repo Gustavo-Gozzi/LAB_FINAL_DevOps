@@ -21,7 +21,7 @@ jobs:
 
       - name: Rodando Container
         run: |
-          docker run meuapp
+          docker run meuapp:latest echo "Container Rodou!"
 
   test: 
     needs: build
@@ -36,7 +36,7 @@ jobs:
 
       - name: Parar containers
         run: |
-          docker-compose down
+          docker-compose run api python -m unittest discover
 
   deploy:
     needs: test
