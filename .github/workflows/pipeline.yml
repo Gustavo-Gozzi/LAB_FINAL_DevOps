@@ -40,7 +40,7 @@ jobs:
           python teste_app.py
     
   deploy:
-      needs: build-and-test
+      needs: test
       runs-on: ubuntu-latest
       steps:
         - name: DEPLOY RENDER GUSTAVO
