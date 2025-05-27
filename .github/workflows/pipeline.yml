@@ -29,8 +29,7 @@ jobs:
 
       - name: Building Servidor
         run: |
-          python app.py &  
-          sleep 5
+          python app.py
 
   test: 
     runs-on: ubuntu-latest
