@@ -30,9 +30,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Parar containers
+      - name: Rodar o Compose
         run: |
-          docker-compose run api python -m unittest discover
+          docker-compose run meuapp python -m unittest discover
 
   deploy:
     needs: test
