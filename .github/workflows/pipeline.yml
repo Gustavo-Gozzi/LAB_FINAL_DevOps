@@ -32,9 +32,9 @@ jobs:
           python app.py &  
           sleep 5
 
-    test: 
-      runs-on: ubuntu-latest
-      steps:
+  test: 
+    runs-on: ubuntu-latest
+    steps:
       - name: Testing Server
         run: |                    
           python teste_app.py
