@@ -38,7 +38,7 @@ jobs:
 
       - name: Rodar o Compose
         run: |
-          docker-compose run meuapp python -m unittest discover
+          docker-compose run api python -m unittest discover
 
   deploy:
     needs: test
